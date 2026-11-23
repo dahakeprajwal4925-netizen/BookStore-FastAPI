@@ -1,0 +1,14 @@
+
+from sqlalchemy import Column, Integer, String, Float
+from app.database import Base
+
+
+class Book(Base):
+    __tablename__ = "books"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(100), nullable=False)
+    author = Column(String(100), nullable=False)
+    category = Column(String(100), nullable=False)
+    price = Column(Float, nullable=False)
+    stock = Column(Integer, nullable=False)

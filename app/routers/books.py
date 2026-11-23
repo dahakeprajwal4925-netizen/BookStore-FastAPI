@@ -1,140 +1,134 @@
 
-from fastapi import APIRouter, HTTPException, status
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from app.database import get_db
+from app.models.book import Book as BookModel
 from app.schemas.book import BookCreate, BookResponse, BookUpdate
 
 router = APIRouter()
 
 
-# Temporary database (Python list)
-BOOKS = [
-    {
-        "id": 1,
-        "title": "Python Programming",
-        "author": "John Smith",
-        "category": "Programming",
-        "price": 499,
-        "stock": 10
-    },
-    {
-        "id": 2,
-        "title": "Learning FastAPI",
-        "author": "David Brown",
-        "category": "Technology",
-        "price": 599,
-        "stock": 5
-    },
-    {
-        "id": 3,
-        "title": "Clean Code",
-        "author": "Robert Martin",
-        "category": "Programming",
-        "price": 699,
-        "stock": 8
-    }
-]
 
 
-# 1. GET: Display all books
+# 1. GET: Display all books from SQLite
 @router.get("/", response_model=list[BookResponse])
-async def get_all_books():
-    return BOOKS
+def get_all_books(db: Session = Depends(get_db)):
+    return db.query(BookModel).all()
 
 
-# 2. GET: Display a book by ID
+# 2. GET: Display a book by ID from SQLite
 @router.get("/{book_id}", response_model=BookResponse)
-async def get_book(book_id: int):
+def get_book(book_id: int, db: Session = Depends(get_db)):
 
-    for book in BOOKS:
-        if book["id"] == book_id:
-            return book
+    book = db.query(BookModel).filter(
+        BookModel.id == book_id
+    ).first()
 
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Book not found"
-    )
+    if book is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Book not found"
+        )
+
+    return book
 
 
-# 3. POST: Create a new book
+# 3. POST: Create a new book in SQLite
 @router.post(
     "/",
     response_model=BookResponse,
     status_code=status.HTTP_201_CREATED
 )
-async def create_book(book: BookCreate):
+def create_book(book: BookCreate, db: Session = Depends(get_db)):
 
-    new_book = book.model_dump()
+    new_book = BookModel(**book.model_dump())
 
-    new_book["id"] = max(
-        (item["id"] for item in BOOKS),
-        default=0
-    ) + 1
-
-    BOOKS.append(new_book)
+    db.add(new_book)
+    db.commit()
+    db.refresh(new_book)
 
     return new_book
 
 
-# 4. PUT: Update complete book information
+
+
+# 4. PUT: Update complete book information in SQLite
 @router.put("/{book_id}", response_model=BookResponse)
-async def update_book(book_id: int, updated_book: BookCreate):
-
-    for index, book in enumerate(BOOKS):
-
-        if book["id"] == book_id:
-
-            new_data = updated_book.model_dump()
-            new_data["id"] = book_id
-
-            BOOKS[index] = new_data
-
-            return new_data
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Book not found"
-    )
-
-
-# 5. PATCH: Update selected book information
-@router.patch("/{book_id}", response_model=BookResponse)
-async def partial_update_book(
+def update_book(
     book_id: int,
-    updated_data: BookUpdate
+    updated_book: BookCreate,
+    db: Session = Depends(get_db)
 ):
+    book = db.query(BookModel).filter(
+        BookModel.id == book_id
+    ).first()
 
-    for book in BOOKS:
+    if book is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Book not found"
+        )
 
-        if book["id"] == book_id:
+    new_data = updated_book.model_dump()
 
-            changes = updated_data.model_dump(
-                exclude_unset=True
-            )
+    for key, value in new_data.items():
+        setattr(book, key, value)
 
-            book.update(changes)
+    db.commit()
+    db.refresh(book)
 
-            return book
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Book not found"
-    )
+    return book
 
 
-# 6. DELETE: Delete a book
+# 5. PATCH: Update selected book information in SQLite
+@router.patch("/{book_id}", response_model=BookResponse)
+def partial_update_book(
+    book_id: int,
+    updated_data: BookUpdate,
+    db: Session = Depends(get_db)
+):
+    book = db.query(BookModel).filter(
+        BookModel.id == book_id
+    ).first()
+
+    if book is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Book not found"
+        )
+
+    changes = updated_data.model_dump(exclude_unset=True)
+
+    for key, value in changes.items():
+        setattr(book, key, value)
+
+    db.commit()
+    db.refresh(book)
+
+    return book
+
+
+# 6. DELETE: Delete a book from SQLite
 @router.delete("/{book_id}")
-async def delete_book(book_id: int):
+def delete_book(
+    book_id: int,
+    db: Session = Depends(get_db)
+):
+    book = db.query(BookModel).filter(
+        BookModel.id == book_id
+    ).first()
 
-    for index, book in enumerate(BOOKS):
+    if book is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Book not found"
+        )
 
-        if book["id"] == book_id:
+    db.delete(book)
+    db.commit()
 
-            BOOKS.pop(index)
-
-            return {
-                "message": "Book deleted successfully"
-            }
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="Book not found"
-    )
+    return {
+        "message": "Book deleted successfully"
+    }
