@@ -12,3 +12,4 @@ class Book(Base):
     category = Column(String(100), nullable=False)
     price = Column(Float, nullable=False)
     stock = Column(Integer, nullable=False)
+    description = Column(String(500), nullable=True)
