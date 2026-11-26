@@ -1,0 +1,1100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Reading Room | Discover Your Next Read</title>
+
+    <meta name="description" content="Explore a thoughtfully curated collection of books at The Reading Room. Discover fiction, business, technology and more.">
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #14283F;
+            --navy-light: #203B58;
+            --cream: #F7F3EA;
+            --cream-dark: #EDE6D9;
+            --coral: #ED7868;
+            --text-dark: #1C2B3A;
+            --text-muted: #75808A;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text-dark);
+            font-family: "DM Sans", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        /* Announcement bar */
+
+        .announcement {
+            background: var(--coral);
+            color: var(--navy);
+            text-align: center;
+            padding: 9px 15px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        /* Navigation */
+
+        .navbar {
+            background: var(--navy);
+            color: var(--cream);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1250px;
+            min-height: 82px;
+            margin: auto;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo {
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+            font-weight: 700;
+            letter-spacing: -0.7px;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--coral);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: #D8DEE5;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--coral);
+        }
+
+        .cart-button {
+            background: var(--coral);
+            color: var(--navy);
+            border: none;
+            border-radius: 5px;
+            padding: 12px 19px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cart-button:hover {
+            background: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+
+        .hero {
+            background: var(--navy);
+            color: var(--cream);
+            min-height: 570px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "R";
+            position: absolute;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-55%);
+            font-family: "Playfair Display", serif;
+            font-size: clamp(250px, 36vw, 490px);
+            font-weight: 700;
+            color: rgba(247, 243, 234, 0.045);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1250px;
+            margin: auto;
+            padding: 95px 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label,
+        .section-label {
+            color: var(--coral);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(48px, 7vw, 82px);
+            line-height: 1.08;
+            font-weight: 500;
+            letter-spacing: -2px;
+            max-width: 720px;
+            margin: 0 0 25px;
+        }
+
+        .hero-description {
+            color: #C8D0D8;
+            font-size: 16px;
+            line-height: 1.9;
+            max-width: 490px;
+            margin-bottom: 35px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: var(--coral);
+            color: var(--navy);
+            padding: 16px 28px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+
+        .hero-button:hover {
+            background: var(--cream);
+            transform: translateY(-3px);
+        }
+
+        .hero-note {
+            margin-top: 55px;
+            color: #9DAAB6;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        /* Intro strip */
+
+        .intro-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: var(--cream-dark);
+            padding: 30px 5%;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .intro-item strong {
+            display: block;
+            color: var(--navy);
+            font-family: "Playfair Display", serif;
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+
+        .intro-item span {
+            color: var(--text-muted);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* Catalogue */
+
+        .catalogue {
+            max-width: 1250px;
+            margin: auto;
+            padding: 105px 28px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-heading .section-label {
+            margin-bottom: 12px;
+        }
+
+        .section-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(34px, 5vw, 48px);
+            font-weight: 500;
+            color: var(--navy);
+            margin: 0 0 12px;
+        }
+
+        .section-heading > p:last-child {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .catalogue-controls {
+            display: flex;
+            gap: 14px;
+            margin: 0 auto 40px;
+            max-width: 850px;
+        }
+
+        #book-search,
+        #category-filter {
+            min-height: 52px;
+            border: 1px solid #DED8CC;
+            background: #FFFEFB;
+            border-radius: 5px;
+            padding: 0 17px;
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        #book-search {
+            flex: 1;
+            min-width: 0;
+        }
+
+        #category-filter {
+            min-width: 190px;
+            cursor: pointer;
+        }
+
+        #book-search:focus,
+        #category-filter:focus {
+            border-color: var(--coral);
+        }
+
+        /* Book cards */
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 28px;
+        }
+
+        .book-card {
+            background: #FFFEFB;
+            border: 1px solid #E9E2D6;
+            border-radius: 7px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(20, 40, 63, 0.10);
+        }
+
+        .book-cover {
+            min-height: 235px;
+            background: var(--navy);
+            color: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px;
+            font-family: "Playfair Display", serif;
+            font-size: 23px;
+        }
+
+        .book-info {
+            padding: 20px;
+        }
+
+        .book-category {
+            color: var(--coral);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .book-info h3 {
+            color: var(--navy);
+            font-family: "Playfair Display", serif;
+            font-size: 20px;
+            margin: 10px 0 7px;
+        }
+
+        .book-info p {
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .book-price {
+            color: var(--navy);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .book-stock {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .add-to-cart {
+            width: 100%;
+            border: none;
+            background: var(--navy);
+            color: var(--cream);
+            border-radius: 4px;
+            padding: 12px;
+            margin-top: 14px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .add-to-cart:hover {
+            background: var(--coral);
+            color: var(--navy);
+        }
+
+        .add-to-cart:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Editorial feature */
+
+        .feature-section {
+            background: var(--navy);
+            color: var(--cream);
+            padding: 90px 28px;
+        }
+
+        .feature-inner {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .feature-mark {
+            min-height: 300px;
+            background: var(--navy-light);
+            border: 1px solid rgba(247, 243, 234, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Playfair Display", serif;
+            font-size: 100px;
+            color: var(--coral);
+        }
+
+        .feature-copy .section-label {
+            margin-bottom: 15px;
+        }
+
+        .feature-copy h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 43px;
+            line-height: 1.2;
+            font-weight: 500;
+            margin: 0 0 20px;
+        }
+
+        .feature-copy p {
+            color: #C5CED7;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        /* About */
+
+        .about-section {
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+            padding: 100px 28px;
+        }
+
+        .about-section h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 40px;
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        .about-section p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        /* Footer */
+
+        .footer {
+            background: var(--navy);
+            color: var(--cream);
+            padding: 60px 28px 25px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding-bottom: 35px;
+        }
+
+        .footer h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 27px;
+            margin: 0 0 12px;
+        }
+
+        .footer p {
+            color: #B7C1CB;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            font-size: 12px;
+            color: #D3D9DF;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: auto;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 20px;
+            color: #AAB5C0;
+            font-size: 11px;
+        }
+
+        /* Book and cart modals */
+
+        .book-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: rgba(9, 21, 34, 0.78);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .book-modal.active {
+            display: flex;
+        }
+
+        .book-modal-content {
+            position: relative;
+            background: var(--cream);
+            color: var(--navy);
+            width: 100%;
+            max-width: 750px;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            padding: 35px;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 30px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            border: none;
+            background: transparent;
+            color: var(--navy);
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .modal-cover {
+            min-height: 260px;
+            background: var(--navy);
+            color: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+        }
+
+        .modal-info {
+            padding-top: 20px;
+        }
+
+        .modal-info h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 30px;
+        }
+
+        .modal-info p {
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .modal-info h3 {
+            color: var(--coral);
+        }
+
+        .cart-content {
+            display: block;
+            max-width: 600px;
+        }
+
+        .cart-content h2 {
+            font-family: "Playfair Display", serif;
+            margin-bottom: 25px;
+        }
+
+        #cart-items {
+            margin: 20px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid #DED8CC;
+        }
+
+        .remove-cart-item {
+            background: var(--coral);
+            color: var(--navy);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 900px) {
+            .books-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .feature-inner {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-container {
+                min-height: 70px;
+                padding: 0 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 25px;
+                padding: 10px 0 14px;
+            }
+
+            .cart-button {
+                padding: 10px 12px;
+                font-size: 11px;
+            }
+
+            .hero {
+                min-height: 490px;
+            }
+
+            .hero-content {
+                padding: 70px 22px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .intro-strip {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .catalogue {
+                padding: 75px 18px;
+            }
+
+            .catalogue-controls {
+                flex-direction: column;
+            }
+
+            #category-filter {
+                min-width: 100%;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .book-cover {
+                min-height: 210px;
+            }
+
+            .feature-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-mark {
+                min-height: 200px;
+            }
+
+            .feature-copy h2 {
+                font-size: 35px;
+            }
+
+            .about-section {
+                padding: 70px 22px;
+            }
+
+            .about-section h2 {
+                font-size: 32px;
+            }
+
+            .book-modal-content {
+                grid-template-columns: 1fr;
+                padding: 25px;
+            }
+
+            .modal-cover {
+                min-height: 180px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+        }
+        /* Cart quantity controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .quantity-controls span {
+            min-width: 20px;
+            text-align: center;
+        }
+        /* Cart item layout */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        /* Book details inside cart */
+        .cart-item strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        /* Cart price */
+        .cart-item p {
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+        /* Remove button */
+        .remove-cart-item {
+            background: transparent;
+            border: none;
+            color: #c45b52;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: underline;
+        }
+
+        /* Hover effect */
+        .remove-cart-item:hover {
+            color: #963c35;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Announcement -->
+    <div class="announcement">
+        A GOOD BOOK IS ALWAYS A GOOD IDEA.
+    </div>
+
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+
+            <a href="/store" class="logo">
+                THE READING <span>ROOM.</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#catalogue">Books</a>
+                <a href="#about">Our Story</a>
+            </nav>
+
+            <button id="cart-button" class="cart-button">
+                🛒 Cart (<span id="cart-count">0</span>)
+            </button>
+
+        </div>
+    </header>
+
+
+    <!-- Hero -->
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="hero-content">
+
+                <p class="hero-label">
+                    A WORLD BEYOND THE COVER
+                </p>
+
+                <h1>
+                    Find your next<br>
+                    great read.
+                </h1>
+
+                <p class="hero-description">
+                    From timeless stories to fresh ideas,
+                    discover books that inspire curiosity,
+                    challenge perspectives and stay with you.
+                </p>
+
+                <a href="#catalogue" class="hero-button">
+                    EXPLORE THE COLLECTION &nbsp; →
+                </a>
+
+                <p class="hero-note">
+                    READ MORE. DISCOVER MORE. BE MORE.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Store Highlights -->
+        <section class="intro-strip">
+
+            <div class="intro-item">
+                <strong>Curated Collection</strong>
+                <span>BOOKS WORTH YOUR TIME</span>
+            </div>
+
+            <div class="intro-item">
+                <strong>Explore Every Genre</strong>
+                <span>SOMETHING FOR EVERY READER</span>
+            </div>
+
+            <div class="intro-item">
+                <strong>Read at Your Pace</strong>
+                <span>YOUR NEXT CHAPTER STARTS HERE</span>
+            </div>
+
+        </section>
+
+
+        <!-- Book Catalogue -->
+        <section class="catalogue" id="catalogue">
+
+            <div class="section-heading">
+
+                <p class="section-label">
+                    THE COLLECTION
+                </p>
+
+                <h2>Books for every curiosity.</h2>
+
+                <p>
+                    Explore our collection and find a story,
+                    an idea or a new perspective worth taking home.
+                </p>
+
+            </div>
+
+
+            <!-- Search and Category Filter -->
+            <div class="catalogue-controls">
+
+                <input
+                    type="text"
+                    id="book-search"
+                    placeholder="Search by title, author or category..."
+                    aria-label="Search books"
+                >
+
+                <select
+                    id="category-filter"
+                    aria-label="Filter books by category"
+                >
+                    <option value="all">All Categories</option>
+                </select>
+
+            </div>
+
+
+            <!-- Books are loaded from FastAPI -->
+            <div id="books-grid" class="books-grid">
+
+                <p>Loading our collection...</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Editorial Feature -->
+        <section class="feature-section">
+
+            <div class="feature-inner">
+
+                <div class="feature-mark">
+                    R.
+                </div>
+
+                <div class="feature-copy">
+
+                    <p class="section-label">
+                        THE ART OF READING
+                    </p>
+
+                    <h2>
+                        Some journeys begin with a single page.
+                    </h2>
+
+                    <p>
+                        A book can take you somewhere you've never been,
+                        introduce you to ideas you've never considered
+                        and help you see familiar things differently.
+                    </p>
+
+                    <p>
+                        Take your time. Turn a page. Find your next world.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- About -->
+        <section class="about-section" id="about">
+
+            <p class="section-label">
+                A LITTLE ABOUT US
+            </p>
+
+            <h2>Welcome to The Reading Room.</h2>
+
+            <p>
+                We believe every reader deserves to find a book
+                that speaks to them. Our bookstore brings together
+                different genres, authors and ideas in one place.
+                Whether you're exploring something new or returning
+                to an old favourite, your next discovery starts here.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- Book Details Modal -->
+    <div id="book-modal" class="book-modal">
+
+        <div class="book-modal-content">
+
+            <button
+                id="close-modal"
+                class="close-modal"
+                aria-label="Close book details"
+            >
+                &times;
+            </button>
+
+            <div class="modal-cover">
+                THE READING ROOM
+            </div>
+
+            <div class="modal-info">
+
+                <p id="modal-category"></p>
+
+                <h2 id="modal-title"></h2>
+
+                <p id="modal-author"></p>
+
+                <h3 id="modal-price"></h3>
+
+                <p id="modal-stock"></p>
+
+                <p id="modal-description"></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="book-modal">
+
+        <div class="book-modal-content cart-content">
+
+            <button
+                id="close-cart"
+                class="close-modal"
+                aria-label="Close shopping cart"
+            >
+                &times;
+            </button>
+
+            <h2>Your Shopping Cart</h2>
+
+            <p>
+                Your selected books, all in one place.
+            </p>
+
+            <div id="cart-items">
+                Your cart is empty.
+            </div>
+
+            <h3>
+                Total: ₹<span id="cart-total">0.00</span>
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+            <div>
+                <h2>THE READING ROOM.</h2>
+
+                <p>
+                    A place for stories, ideas and discovery.
+                    <br>
+                    Your next chapter starts here.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#catalogue">Collection</a>
+                <a href="#about">Our Story</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 The Reading Room. All rights reserved.
+        </div>
+
+    </footer>
+
+
+    <!-- Existing JavaScript -->
+    <script src="/static/store.js"></script>
+
+</body>
+
+</html>

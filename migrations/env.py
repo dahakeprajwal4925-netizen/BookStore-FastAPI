@@ -7,8 +7,7 @@ from alembic import context
 from dotenv import load_dotenv
 
 from app.database import Base, engine
-from app.models import book
-
+from app.models import book, order, order_item
 
 # Load environment variables
 load_dotenv()

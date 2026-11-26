@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Access | BookStore</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+
+<body class="verification-body">
+
+    <header class="site-header">
+        <a href="/" class="brand">Book<span>Store.</span></a>
+        <span class="header-note">A world of stories awaits</span>
+    </header>
+
+    <main class="verification-main">
+
+        <section class="verification-card">
+
+            <div class="security-icon">✓</div>
+
+            <p class="eyebrow">SECURE ACCESS</p>
+
+            <h1>
+                Before you enter,<br>
+                one little check.
+            </h1>
+
+            <p class="verification-description">
+                We want to keep BookStore safe for everyone.
+                Please complete this quick security check
+                to continue exploring.
+            </p>
+
+            <form id="verification-form">
+
+                <div class="turnstile-wrapper">
+                    <div
+                        class="cf-turnstile"
+                        data-sitekey="0x4AAAAAAGQaB2ZNLLKVxuSx"
+                        data-callback="onTurnstileSuccess">
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    id="verify-button"
+                    class="primary-button"
+                    disabled>
+                    Verify & Enter BookStore
+                    <span>→</span>
+                </button>
+
+            </form>
+
+            <p id="message" class="verification-message"></p>
+
+            <div class="card-footer">
+                <span>Protected access</span>
+                <span>•</span>
+                <span>Powered by Cloudflare</span>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        © 2026 BookStore. Made for the love of reading.
+    </footer>
+
+    <script src="/static/app.js"></script>
+
+</body>
+</html>
