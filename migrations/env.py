@@ -18,7 +18,6 @@ config = context.config
 # Configure logging
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
-
 # SQLAlchemy model metadata
 target_metadata = Base.metadata
 

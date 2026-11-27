@@ -3,6 +3,7 @@ import httpx
 from fastapi import Request, HTTPException
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
+from app.routers import orders
 
 import os
 from dotenv import load_dotenv
@@ -54,7 +55,7 @@ app.include_router(
     tags=["Books"]
 )
 
-
+app.include_router(orders.router)
 
 @app.get("/")
 async def verification_page(request: Request):

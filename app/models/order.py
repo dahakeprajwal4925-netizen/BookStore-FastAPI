@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 from app.database import Base
 
@@ -23,3 +24,10 @@ class Order(Base):
     status = Column(String(50), default="Pending")
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    # Relationship with OrderItem
+    items = relationship(
+        "OrderItem",
+        back_populates="order",
+        cascade="all, delete-orphan"
+    )
